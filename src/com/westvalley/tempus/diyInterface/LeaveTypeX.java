@@ -5,16 +5,21 @@ import java.util.Map;
 import crivia.db.common.SQL;
 import crivia.db.i.DataSet;
 import crivia.eca.Cat;
+import crivia.src.EFParamReader;
 import crivia.txt.common.Logger;
 //com.westvalley.tempus.diyInterface.LeaveTypeX
 public class LeaveTypeX extends Cat {
 
 	@Override
 	protected String ecaAct() throws Exception {
+		//判断是否是提交或者退回 is  然后提示ALT+斜杠
+		
+		//取主表  String  s = mainValue("字段名");
 		Map<String,String> vt4type=selectValueText(getRequestTableName(1), t1.tb_leave_type2);
 		Map<String,String> tv4is_annual_leave=selectTextValue(getRequestTableName(), t0.is_annual_leave);
 		Logger.log("vt4type > "+vt4type);
 		Logger.log("tv4is_annual_leave > "+tv4is_annual_leave);
+		//取明细表
 		DataSet d1=subData(1);
 		boolean leave_type = false;//是否是特殊假
 		
@@ -51,6 +56,10 @@ public class LeaveTypeX extends Cat {
 		return null;
 	}
 
+	//生成下面t0,t1的方法  ，字符串参考http://172.18.240.59/ECADeployer.actionSetting.c
+	//public static void main(String[] args) {
+		//System.out.println(EFParamReader.toEFT("字符串贴进来"));
+	//}
 
 	
 	/* Fields (Main Table) */

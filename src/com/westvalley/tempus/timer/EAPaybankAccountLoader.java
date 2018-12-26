@@ -35,7 +35,7 @@ public class EAPaybankAccountLoader extends BaseCronJob{
 				"  inner join CE.CE_BANK_ACCOUNTS e " + 
 				"    on e.bank_account_id = d.bank_account_id " + 
 				"  where flex_value_set_id = 1014867 " + 
-				"   and b.attribute4 = 'OA'",EcologyDB.db("oracle"));
+				"   and b.attribute4 = 'OA' and (d.end_date>sysdate or d.end_date is null)",EcologyDB.db("oracle"));
 		Map<String,String> idMapping = new HashMap<String,String>();
 		while(data.next()) {
 			String paybankid = data.get("paybankid");

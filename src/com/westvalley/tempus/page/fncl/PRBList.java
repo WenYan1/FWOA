@@ -343,7 +343,7 @@ public class PRBList extends Lister {
 		s.addTableColumn("收款人银行开户行", PRB.Keys.prbrecBankName);
 		s.addTableColumn("付款账户", PRB.Keys.prbPayMentAccount);
 		s.addTableColumn("付款账户名称", PRB.Keys.prbPayMentAccountName.key());
-		s.addTableColumn("生成付款单日期", PRB.Keys.createDay);
+		//s.addTableColumn("生成付款单日期", PRB.Keys.createDay);
 		s.addTableColumn("付款日期", PRB.Keys.prbGLDay);
 		s.addTableColumn("是否付款", PRB.Keys.vcr2Status);
 		s.addTableColumn("是否手动付款", PRB.Keys.isManual);

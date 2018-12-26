@@ -8,7 +8,7 @@ import crivia.db.common.SQL;
 import crivia.eca.a.EcologyCMD_Trans;
 import crivia.ecp.p.AutoExampleImport;
 import crivia.txt.sc.RK;
-
+//导入页面
 public class EAVStartBankImport extends AutoExampleImport {
 
 	@Override

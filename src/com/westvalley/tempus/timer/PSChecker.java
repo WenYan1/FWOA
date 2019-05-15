@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.westvalley.tempus.carry.fncl.PR;
+import com.westvalley.tempus.carry.fncl.PRB;
 import com.westvalley.tempus.ps.PSM;
 
 import crivia.db.common.SQL;
@@ -31,6 +32,7 @@ public class PSChecker extends BaseCronJob {
 			for(String b:prbks){
 				try {
 					Map<String,String> m=PSM.f(b);
+					Logger.log("查询返回的值为> "+m);
 					for(String r:m.keySet())prr.put(r, m.get(r));
 				} catch (Exception e) {
 					Logger.logException("查询付款状态异常",e);
@@ -42,11 +44,16 @@ public class PSChecker extends BaseCronJob {
 								:"6".equals(prr.get(r))?PR.PayStatus.Fail
 										:PR.PayStatus.Payed
 										;
+				Logger.log("开始更新状态"+PR.Keys.payKey+"111111111"+r);
+				PR prbId=SQL.one(EcologyDB.db(), PR.class, true
+						,SQL.cd.equals(PR.Keys.requestID,r));
+				Logger.log("测试pr"+prbId);
+				Logger.log("prb数值"+PR.Keys.prb+"fengexian"+prbId.getPrb().getId());
 				SQL.edit(SQL.sql.array("update "+PR.table()
 						+" set "+PR.Keys.payStatus+"=?"
-						+" where "+PR.Keys.requestID+"=?"
-						, s , r
-						),EcologyDB.db());
+						+" where "+PR.Keys.prb+"=?"
+						, s , prbId.getPrb().getId()
+						),EcologyDB.db()); 
 			}
 		}catch(Throwable e){
 			Logger.logException("PS CHECKER EXECUTE EXCEPTION",e);

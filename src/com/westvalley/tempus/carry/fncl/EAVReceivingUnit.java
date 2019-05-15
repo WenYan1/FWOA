@@ -24,9 +24,14 @@ public class EAVReceivingUnit extends ECC{
 		keyLinks.add(ValueField.c2d("code").setTipText("收款单位编码"));
 		keyLinks.add(ValueField.c2d("name").setTipText("收款单位名称"));
 		keyLinks.add(ValueField.c2d("segment1").setTipText("供应商编号"));
-		
+		keyLinks.add(ValueField.c2d("company").setTipText("公司名称"));
+		keyLinks.add(ValueField.c2d("combinationCode").setTipText("组合编码"));
 	}
 
+
+
+
+	
 
 
 
@@ -35,6 +40,8 @@ public class EAVReceivingUnit extends ECC{
 		/** <b>收款单位编码</b> */code("code","code")
 		,/** <b>收款单位名称</b> */name("name","name")
 		,/** <b>供应商编号</b> */segment1("segment1","segment1")
+		,/** <b>公司名称</b> */company("company","company")
+		,/** <b>组合编码</b> */combinationCode("combinationCode","combinationCode")
 		;
 		private String _dbKey;
 		private String _key;
@@ -108,6 +115,32 @@ public class EAVReceivingUnit extends ECC{
 	/** Setter for <b>供应商编号</b> */
 	public com.westvalley.tempus.carry.fncl.EAVReceivingUnit setSegment1(java.lang.String segment1){
 		this.segment1 = segment1;
+		return this;
+	}
+
+
+	/** <b>公司名称</b> */
+	private java.lang.String company;
+	/** Getter for <b>公司名称</b> */
+	public java.lang.String getCompany(){
+		return company;
+	}
+	/** Setter for <b>公司名称</b> */
+	public com.westvalley.tempus.carry.fncl.EAVReceivingUnit setCompany(java.lang.String company){
+		this.company = company;
+		return this;
+	}
+
+
+	/** <b>组合编码</b> */
+	private java.lang.String combinationCode;
+	/** Getter for <b>组合编码</b> */
+	public java.lang.String getCombinationCode(){
+		return combinationCode;
+	}
+	/** Setter for <b>组合编码</b> */
+	public com.westvalley.tempus.carry.fncl.EAVReceivingUnit setCombinationCode(java.lang.String combinationCode){
+		this.combinationCode = combinationCode;
 		return this;
 	}
 

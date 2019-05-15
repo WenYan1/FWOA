@@ -30,11 +30,11 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 		Logger.log("EAReceivingUnitLoader Finish.");
 	} 
 	public static void load() {
-		DataSet data =SQL.select("select vendor_id , vendor_name ,segment1   from Ap_Suppliers where (vendor_type_lookup_code <> 'EMPLOYEE' or  vendor_type_lookup_code is null) and (sysdate between start_date_active and end_date_active or end_date_active is null)" 
+		DataSet data =SQL.select("select  combinationCode ,name,vendor_id ,vendor_name,segment1 from (select distinct ou.name, ou.short_code || vd. vendor_id as combinationCode,vd. vendor_id, vd.vendor_name, vd.segment1  from Ap_Suppliers vd， ap_supplier_sites_all vs, hr_operating_units    ou where  vd.vendor_id = vs.vendor_id(+) AND ou.organization_id(+) = vs.org_id and (vd.vendor_type_lookup_code <> 'EMPLOYEE' or vd.vendor_type_lookup_code is null) and (sysdate between vd.start_date_active and vd.end_date_active or vd.end_date_active is null))" 
 				,EcologyDB.db("oracle"));
 		Map<String,String> idMapping = new HashMap<String,String>();
 		while(data.next()) {
-			String code = data.get("vendor_id");
+			String code = data.get("combinationCode");
 			idMapping.put(code, "");
 		}
 		
@@ -59,7 +59,7 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 			//以or关键字将所有的in拼接起来
 			cd=SQL.cd.or(cds.toArray(new String[]{}));
 		}//创建一个集合来存储被拼接的条件 END
-		DataSet dataIds = SQL.select(SQL.sql.array("select id k, code c from "+EAVReceivingUnit.table()
+		DataSet dataIds = SQL.select(SQL.sql.array("select id k, combinationCode c from "+EAVReceivingUnit.table()
 			+" where "+cd//此处直接拼接创建好的条件
 		),EcologyDB.db());
 		
@@ -71,19 +71,21 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 		try{
 			//SQL.edit(SQL.sql.array("delete  from "+EAVReceivingUnit.table()),cmd);
 		while(data.next()){
-			String code = data.get("vendor_id");
+			String company=data.get("name");
+			String combinationCode = data.get("combinationCode");
+			String vendor_id = data.get("vendor_id");
 			String name = data.get("vendor_name").replaceAll("'", "''");;
-			String id = idMapping.get(code);
+			String id = idMapping.get(combinationCode);
 			String segment1 = data.get("segment1");
 			if(ECR.hasCondition(id)) {
 				SQL.edit(SQL.sql.array("update "+EAVReceivingUnit.table()
-				+" set code=?,name=?,segment1=? where id=?"
-				,code,name,segment1,id),cmd);
+				+" set code=?,name=?,segment1=?,company=?,combinationCode=? where id=?"
+				,vendor_id,name,segment1,company,combinationCode,id),cmd);
 				
 			}else {
 				SQL.edit(SQL.sql.array("insert  into "+EAVReceivingUnit.table()
-				+" (id,code,name,segment1) values (?,?,?,?)",
-				RK.rk(),code,name,segment1),cmd);
+				+" (id,code,name,segment1,company,combinationCode) values (?,?,?,?,?)",
+				RK.rk(),vendor_id,name,segment1,company,combinationCode),cmd);
 			}		
 		}
 		cmd.end(true);

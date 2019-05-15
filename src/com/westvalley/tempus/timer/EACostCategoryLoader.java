@@ -23,7 +23,10 @@ public class EACostCategoryLoader extends BaseCronJob{
 		Logger.log("EACostCategoryLoader Finish.");
 	} 
 	public static void load() {
-		DataSet data =SQL.select("select flex_value costvalue,description costname from fnd_flex_values_vl where flex_value_set_id='1014869' and (flex_value like '6601______' or flex_value like '6602______' or flex_value='2221100301'  or flex_value='1221020101'  or flex_value like '7001______' or flex_value like '6603______' or  flex_value='2241010101' or  flex_value='6405010101' and flex_value='1221010101')",EcologyDB.db("oracle"));
+		DataSet data =SQL.select("select flex_value costvalue,description costname from fnd_flex_values_vl where "
+				+ "flex_value_set_id='1014869' and (flex_value like '6601______' or flex_value like '6602______' or flex_value='2221100301'  or"
+				+ " flex_value='1221020101'  or flex_value like '7001______' or flex_value like '6603______' or "
+				+ " flex_value='2241010101' or  flex_value='6405010101' or flex_value='1221010101' or flex_value='6401030101' )",EcologyDB.db("oracle"));
 		Map<String,String> idMapping = new HashMap<String,String>();
 		while(data.next()) {
 			String costvalue = data.get("costvalue");

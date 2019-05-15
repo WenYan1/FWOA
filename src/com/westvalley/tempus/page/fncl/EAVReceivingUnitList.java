@@ -28,6 +28,7 @@ public class EAVReceivingUnitList extends Lister{
 		t.addTableColumn("收款单位编码",EAVReceivingUnit.Keys.code);
 		t.addTableColumn("收款单位名称",EAVReceivingUnit.Keys.name);
 		t.addTableColumn("供应商编号",EAVReceivingUnit.Keys.segment1);
+		t.addTableColumn("公司名称",EAVReceivingUnit.Keys.company);
 		t.setTableType(Type.None);
 		
 		

@@ -31,6 +31,7 @@ public class OracleVoucherCreator extends BaseCronJob {
 					+" and s."+PR.Keys.payStatus+"!="+SQL.sql.sv(PR.PayStatus.Success)+")=0"
 //				, db.specially().isNull("t."+PRB.Keys.vcr2Status, SQL.sql.sv("N"))+"!="+SQL.sql.sv("Y")
 		);
+		Logger.log("查询已经支付成功的 "+SQL.LastSQL);
 		for(PRB b:prbs){
 			List<PR> prs=SQL.list(EcologyDB.db(), PR.class
 					, SQL.cd.equals(PR.Keys.prb, b.getId())

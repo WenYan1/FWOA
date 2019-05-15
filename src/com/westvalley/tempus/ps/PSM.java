@@ -27,8 +27,9 @@ import crivia.txt.common.Logger;
 import crivia.txt.common.MoneyFormat;
 
 public class PSM {
+	//public static final String URL="http://172.18.240.71:9080/mbs/ERPServlet";//正式环境
+	public static final String URL="http://www7.asuscomm.com:8528/mbs/ERPServlet";//    测试环境
 	
-	public static final String URL="http://www7.asuscomm.com:7133/mbs/ERPServlet";
 	
 	public static void main(String[] args) throws ClientProtocolException, IOException {
 		JO302 jo=_.new JO302();
@@ -79,7 +80,7 @@ public class PSM {
 		System.out.println("数据 >  ");
 		System.out.println(json);
 		
-		String url="http://www7.asuscomm.com:7133/mbs/ERPServlet";
+		String url=URL;
 		System.out.println("接口地址 > ");
 		System.out.println(url);
 		String s=Poster.jx(url, "gbk", json);

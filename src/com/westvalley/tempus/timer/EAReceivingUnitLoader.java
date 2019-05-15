@@ -34,8 +34,8 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 				,EcologyDB.db("oracle"));
 		Map<String,String> idMapping = new HashMap<String,String>();
 		while(data.next()) {
-			String code = data.get("combinationCode");
-			idMapping.put(code, "");
+			String combinationCode = data.get("combinationCode");
+			idMapping.put(combinationCode, "");
 		}
 		
 		String cd;{//创建一个集合来存储被拼接的条件 BEGIN
@@ -46,7 +46,7 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 			for(String s:idMapping.keySet()){
 				k++;
 				if(k>500){//大于500个值时增加一个in
-					cds.add(SQL.cd.in("code", ids));
+					cds.add(SQL.cd.in("combinationCode", ids));
 					//重置计数器和ID
 					k=1;ids=new StringBuilder();
 				}
@@ -54,7 +54,7 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 				ids.append(s);
 			}
 			if(ids.length()>0) {
-				cds.add(SQL.cd.in("code", ids));
+				cds.add(SQL.cd.in("combinationCode", ids));
 			}
 			//以or关键字将所有的in拼接起来
 			cd=SQL.cd.or(cds.toArray(new String[]{}));
@@ -73,19 +73,19 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 		while(data.next()){
 			String company=data.get("name");
 			String combinationCode = data.get("combinationCode");
-			String vendor_id = data.get("vendor_id");
+			String code = data.get("vendor_id");
 			String name = data.get("vendor_name").replaceAll("'", "''");;
 			String id = idMapping.get(combinationCode);
 			String segment1 = data.get("segment1");
 			if(ECR.hasCondition(id)) {
 				SQL.edit(SQL.sql.array("update "+EAVReceivingUnit.table()
 				+" set code=?,name=?,segment1=?,company=?,combinationCode=? where id=?"
-				,vendor_id,name,segment1,company,combinationCode,id),cmd);
+				,code,name,segment1,company,combinationCode,id),cmd);
 				
 			}else {
 				SQL.edit(SQL.sql.array("insert  into "+EAVReceivingUnit.table()
-				+" (id,code,name,segment1,company,combinationCode) values (?,?,?,?,?)",
-				RK.rk(),vendor_id,name,segment1,company,combinationCode),cmd);
+				+" (id,code,name,segment1,company,combinationCode) values (?,?,?,?,?,?)",
+				RK.rk(),code,name,segment1,company,combinationCode),cmd);
 			}		
 		}
 		cmd.end(true);

@@ -30,7 +30,8 @@ public class EAReceivingUnitLoader extends BaseCronJob{
 		Logger.log("EAReceivingUnitLoader Finish.");
 	} 
 	public static void load() {
-		DataSet data =SQL.select("select  combinationCode ,name,vendor_id ,vendor_name,segment1 from (select distinct ou.name, ou.short_code || vd. vendor_id as combinationCode,vd. vendor_id, vd.vendor_name, vd.segment1  from Ap_Suppliers vd， ap_supplier_sites_all vs, hr_operating_units    ou where  vd.vendor_id = vs.vendor_id(+) AND ou.organization_id(+) = vs.org_id and (vd.vendor_type_lookup_code <> 'EMPLOYEE' or vd.vendor_type_lookup_code is null) and (sysdate between vd.start_date_active and vd.end_date_active or vd.end_date_active is null))" 
+		DataSet data =SQL.select("select  combinationCode ,name,vendor_id ,vendor_name,segment1 from (select distinct ou.name, ou.short_code || vd. vendor_id as combinationCode,vd. vendor_id, vd.vendor_name, vd.segment1  from Ap_Suppliers vd， ap_supplier_sites_all vs, hr_operating_units    ou where  vd.vendor_id = vs.vendor_id(+) AND ou.organization_id(+) = vs.org_id and (vd.vendor_type_lookup_code <> 'EMPLOYEE' or vd.vendor_type_lookup_code is null) and (sysdate between vd.start_date_active and vd.end_date_active or vd.end_date_active is null)"
+				+ "and  (sysdate between vd.start_date_active  and vs.inactive_date or vs.inactive_date is null))" 
 				,EcologyDB.db("oracle"));
 		Map<String,String> idMapping = new HashMap<String,String>();
 		while(data.next()) {

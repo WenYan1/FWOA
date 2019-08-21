@@ -560,7 +560,7 @@ public class PRList extends Lister {
 		t.addTableColumn("金额",null,PR.Keys.money+"Text","money");
 		t.addTableColumn("申请日期", PR.Keys.createDay);
 		t.addTableColumn("GL日期", PR.Keys.vdGLDay);
-		t.addTableColumn("操作日期", "prbPayDay");
+		t.addTableColumn("操作日期", PR.Keys.payDay.key());
 		t.addTableColumn("操作时间", "prbPayTime");
 		t.addTableColumn("付款银行账号", PR.Keys.vdPayMentAccountName.key());
 		if(!PRType.Pay.equals(Type)){

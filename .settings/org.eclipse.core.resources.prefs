@@ -1,3 +1,7 @@
 eclipse.preferences.version=1
 encoding//WebRoot/WEB-INF/lib=GBK
+encoding//src/com/westvalley/tempus/sie/OaServerService.java=UTF-8
+encoding//src/com/westvalley/tempus/sie/OaServerServiceLocator.java=UTF-8
+encoding//src/com/westvalley/tempus/sie/OaServerServiceSoapBindingStub.java=UTF-8
+encoding//src/com/westvalley/tempus/sie/OaWebservice.java=UTF-8
 encoding/src=UTF-8
